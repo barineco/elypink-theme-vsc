@@ -1,0 +1,15 @@
+# dev files
+.vscode/
+.git/
+.gitignore
+
+# scripts
+scripts/
+build.sh
+
+# temporary files
+tmp/
+
+# other
+*.vsix
+*.py

@@ -1,0 +1,62 @@
+{
+  "name": "elypink-theme",
+  "displayName": "Elypink Theme",
+  "description": "lovely theme for VSC",
+  "version": "0.2.0",
+  "publisher": "barine.co",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "pink",
+    "light",
+    "pastel"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Elypink Light",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light.json"
+      },
+      {
+        "label": "Elypink Light Subtle",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light-subtle.json"
+      },
+      {
+        "label": "Qinshi Light",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light-qinshi.json"
+      },
+      {
+        "label": "Elypink Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/elypink-dark.json"
+      },
+      {
+        "label": "Elypink Dark Subtle",
+        "uiTheme": "vs-dark",
+        "path": "./themes/elypink-dark-subtle.json"
+      },
+      {
+        "label": "Qinshi Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/elypink-dark-qinshi.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "scripts": {
+    "generate-subtle": "node scripts/generate-subtle.js",
+    "generate-qinshi": "node scripts/generate-qinshi.js",
+    "generate-dark": "node scripts/generate-dark.js"
+  }
+}
