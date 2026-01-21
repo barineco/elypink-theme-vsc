@@ -2,8 +2,8 @@
   "name": "elypink-theme",
   "displayName": "Elypink Theme",
   "description": "lovely theme for VSC",
-  "version": "0.2.0",
-  "publisher": "barine.co",
+  "version": "0.3.0",
+  "publisher": "barineco",
   "engines": {
     "vscode": "^1.70.0"
   },

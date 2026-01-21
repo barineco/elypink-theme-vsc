@@ -30,6 +30,18 @@ const FOREGROUND_KEYS = [
   'Foreground',
 ];
 
+// 明度反転対象
+const INVERT_KEYS = [
+  'gitDecoration.',
+  'editorGutter.',
+];
+
+// 色維持 (やや暗く)
+const PRESERVE_KEYS = [
+  'badge.background',
+  'activityBarBadge.background',
+];
+
 // 選択範囲系 (明度反転処理)
 const SELECTION_KEYS = [
   'selectionBackground',
@@ -58,6 +70,14 @@ function isTerminalAnsiKey(key) {
 
 function isTerminalSelectionKey(key) {
   return TERMINAL_SELECTION_KEYS.some((pattern) => key.includes(pattern));
+}
+
+function isInvertKey(key) {
+  return INVERT_KEYS.some((pattern) => key.includes(pattern));
+}
+
+function isPreserveKey(key) {
+  return PRESERVE_KEYS.some((pattern) => key.includes(pattern));
 }
 
 // 背景色の変換:
@@ -108,13 +128,34 @@ function transformTerminalSelection(hexColor) {
 }
 
 // 前景色の変換
-// 明度を上げる, 彩度を上げる
 function transformForeground(hexColor) {
   const rgb = hexToRgb(hexColor);
   if (!rgb) return hexColor;
   const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
   const newBrightness = Math.min(1, 0.7 + hsb.b * 0.3);
   const newSaturation = Math.min(1, hsb.s * 1.3);
+  const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
+  return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
+}
+
+// 明度反転
+function transformInvert(hexColor) {
+  const rgb = hexToRgb(hexColor);
+  if (!rgb) return hexColor;
+  const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+  const newBrightness = 1 - hsb.b;
+  const newSaturation = Math.min(1, hsb.s * 1.1);
+  const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
+  return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
+}
+
+// 色維持 (少しだけ暗く)
+function transformPreserve(hexColor) {
+  const rgb = hexToRgb(hexColor);
+  if (!rgb) return hexColor;
+  const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+  const newBrightness = hsb.b * 0.8;
+  const newSaturation = Math.min(1, hsb.s * 1.1);
   const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
   return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
 }
@@ -144,6 +185,10 @@ function transformColors(colors) {
       result[key] = transformTerminalAnsi(value);
     } else if (isSelectionKey(key)) {
       result[key] = transformSelection(value);
+    } else if (isPreserveKey(key)) {
+      result[key] = transformPreserve(value);
+    } else if (isInvertKey(key)) {
+      result[key] = transformInvert(value);
     } else if (isForegroundKey(key)) {
       result[key] = transformForeground(value);
     } else if (isBackgroundKey(key)) {

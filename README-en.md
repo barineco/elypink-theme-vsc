@@ -90,6 +90,14 @@ Applies different transformations based on key categories.
   - Brightness -> 0.4 + b x 0.3
   - Saturation x 1.2
 
+- Invert (`gitDecoration.*`, `editorGutter.*`)
+  - Brightness -> 1 - b
+  - Saturation x 1.1
+
+- Preserve (`badge.background`, `activityBarBadge.background`)
+  - Brightness x 0.8
+  - Saturation x 1.1
+
 - Token Colors (tokenColors)
   - Brightness -> 0.75 + b x 0.2
   - Saturation x 1.4

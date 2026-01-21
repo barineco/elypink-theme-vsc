@@ -90,6 +90,14 @@ theme.colors = processColors(theme.colors, transformer);
   - 明度 → 0.4 + b × 0.3
   - 彩度 × 1.2
 
+- 明度反転 (`gitDecoration.*`, `editorGutter.*`)
+  - 明度 → 1 − b
+  - 彩度 × 1.1
+
+- 色維持 (`badge.background`, `activityBarBadge.background`)
+  - 明度 × 0.8
+  - 彩度 × 1.1
+
 - トークン色 (tokenColors)
   - 明度 → 0.75 + b × 0.2
   - 彩度 × 1.4
