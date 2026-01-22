@@ -112,6 +112,95 @@ function processColors(obj, transformer) {
   return obj;
 }
 
+// 相対輝度 (WCAG)
+function relativeLuminance(r, g, b) {
+  const sRGB = [r, g, b].map(v => {
+    v = v / 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2];
+}
+
+// コントラスト比
+function contrastRatio(lum1, lum2) {
+  return (Math.max(lum1, lum2) + 0.05) / (Math.min(lum1, lum2) + 0.05);
+}
+
+// 背景に対してコントラスト比を確保するよう輝度を調整
+// targetContrast: 目標コントラスト比
+// bgHex: 背景色 (hex)
+// fgHex: 前景色 (hex)
+// saturationBoost: 輝度変化1%あたりの彩度上昇率 
+// returns: 調整後の前景色 (hex)
+function ensureContrast(fgHex, bgHex, targetContrast, saturationBoost = 3.0) {
+  const fgRgb = hexToRgb(fgHex);
+  const bgRgb = hexToRgb(bgHex);
+  if (!fgRgb || !bgRgb) return fgHex;
+
+  const bgLum = relativeLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
+  const fgLum = relativeLuminance(fgRgb.r, fgRgb.g, fgRgb.b);
+  const currentContrast = contrastRatio(fgLum, bgLum);
+
+  // 目標達成していれば変更なし
+  if (currentContrast >= targetContrast) return fgHex;
+
+  const hsb = rgbToHsb(fgRgb.r, fgRgb.g, fgRgb.b);
+  const originalB = hsb.b;
+
+  // 二分探索で輝度を調整 (暗くと明るくの両方)
+  function findBestBrightness(goingDarker) {
+    let low = goingDarker ? 0 : hsb.b;
+    let high = goingDarker ? hsb.b : 1;
+    let bestB = null;
+
+    for (let i = 0; i < 20; i++) {
+      const mid = (low + high) / 2;
+      const testRgb = hsbToRgb(hsb.h, hsb.s, mid);
+      const testLum = relativeLuminance(testRgb.r, testRgb.g, testRgb.b);
+      const testContrast = contrastRatio(testLum, bgLum);
+
+      if (testContrast >= targetContrast) {
+        bestB = mid;
+        // 目標達成したら、元の輝度に近づける方向へ
+        if (goingDarker) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+      } else {
+        // 目標未達なら、さらに輝度を変える方向へ
+        if (goingDarker) {
+          high = mid;
+        } else {
+          low = mid;
+        }
+      }
+    }
+    return bestB;
+  }
+
+  const darkerB = findBestBrightness(true);
+  const lighterB = findBestBrightness(false);
+
+  // 両方向の結果を比較して、小さい変化を選択
+  let bestB = originalB;
+  if (darkerB !== null && lighterB !== null) {
+    bestB = Math.abs(originalB - darkerB) <= Math.abs(originalB - lighterB) ? darkerB : lighterB;
+  } else if (darkerB !== null) {
+    bestB = darkerB;
+  } else if (lighterB !== null) {
+    bestB = lighterB;
+  }
+
+  // 輝度の変化量に応じて彩度を調整
+  const brightnessChange = Math.abs(originalB - bestB);
+  const saturationIncrease = brightnessChange * saturationBoost;
+  const newS = Math.min(1, hsb.s + saturationIncrease);
+
+  const newRgb = hsbToRgb(hsb.h, newS, bestB);
+  return rgbToHex(newRgb.r, newRgb.g, newRgb.b, fgRgb.a);
+}
+
 module.exports = {
   rgbToHsb,
   hsbToRgb,
@@ -119,4 +208,7 @@ module.exports = {
   rgbToHex,
   transformColor,
   processColors,
+  relativeLuminance,
+  contrastRatio,
+  ensureContrast,
 };

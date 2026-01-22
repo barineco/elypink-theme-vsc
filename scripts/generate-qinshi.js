@@ -2,38 +2,36 @@
 
 const fs = require('fs');
 const path = require('path');
-const { processColors, hexToRgb, rgbToHex, rgbToHsb, hsbToRgb } = require('./lib/color-utils');
+const { processColors, ensureContrast } = require('./lib/color-utils');
 
-const HUE_SHIFT = -130;
-const SATURATION_SCALE = 0.7;
-const BRIGHTNESS_SCALE = 0.9;
+const SATURATION_SCALE = 0.95;
+const BRIGHTNESS_SCALE = 0.95;
 
-// ターミナル選択範囲
-const TERMINAL_SELECTION_KEYS = ['terminal.selectionBackground'];
+// 色相反転: 90度を軸に反転 (h' = 180 - h)
+function mirrorHue(h) {
+  let newH = 180 - h;
+  if (newH < 0) newH += 360;
+  return newH;
+}
 
-// 色相シフト + 彩度・明度調整の変換関数
-const hueShiftTransformer = (hsb) => {
-  let newHue = hsb.h + HUE_SHIFT;
-  if (newHue < 0) newHue += 360;
-  if (newHue >= 360) newHue -= 360;
+
+// UI色用: 色相反転 + 彩度・明度調整
+const uiColorTransformer = (hsb) => {
   return {
-    h: newHue,
+    h: mirrorHue(hsb.h),
     s: hsb.s * SATURATION_SCALE,
     b: hsb.b * BRIGHTNESS_SCALE,
   };
 };
 
-// ターミナル選択範囲
-// 他と逆方向のシフト (シアン 205° → ピンク 335°)
-function transformTerminalSelection(hexColor) {
-  const rgb = hexToRgb(hexColor);
-  if (!rgb) return hexColor;
-  const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
-  let newHue = hsb.h + 130;
-  if (newHue >= 360) newHue -= 360;
-  const newRgb = hsbToRgb(newHue, hsb.s * SATURATION_SCALE, hsb.b * BRIGHTNESS_SCALE);
-  return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
-}
+// トークン色用: 色相反転 + 明度調整のみ (彩度維持)
+const tokenColorTransformer = (hsb) => {
+  return {
+    h: mirrorHue(hsb.h),
+    s: hsb.s,
+    b: hsb.b * BRIGHTNESS_SCALE,
+  };
+};
 
 // メイン
 function generateQinshi(inputFile) {
@@ -50,25 +48,124 @@ function generateQinshi(inputFile) {
   theme.name = theme.name.replace('Elypink', 'Qinshi');
   // 色を処理
   if (theme.colors) {
-    // ターミナル選択範囲の元の値を保存
-    const terminalSelectionOriginal = {};
-    for (const key of TERMINAL_SELECTION_KEYS) {
-      if (theme.colors[key]) {
-        terminalSelectionOriginal[key] = theme.colors[key];
-      }
+    // gitDecoration色を保存（色相変換しない）
+    const gitDecorationKeys = Object.keys(theme.colors).filter(k => k.startsWith('gitDecoration'));
+    const gitDecorationColors = {};
+    for (const key of gitDecorationKeys) {
+      gitDecorationColors[key] = theme.colors[key];
     }
-    // 通常の色相シフト
-    theme.colors = processColors(theme.colors, hueShiftTransformer);
-    // ターミナル選択範囲だけ逆方向シフトで上書き
-    for (const key of TERMINAL_SELECTION_KEYS) {
-      if (terminalSelectionOriginal[key]) {
-        theme.colors[key] = transformTerminalSelection(terminalSelectionOriginal[key]);
-      }
+
+    // UI色: 色相反転 + 彩度・明度調整
+    theme.colors = processColors(theme.colors, uiColorTransformer);
+
+    // gitDecoration色を復元（色相はそのまま）
+    for (const key of gitDecorationKeys) {
+      theme.colors[key] = gitDecorationColors[key];
     }
   }
   if (theme.tokenColors) {
-    theme.tokenColors = processColors(theme.tokenColors, hueShiftTransformer);
+    theme.tokenColors = processColors(theme.tokenColors, tokenColorTransformer);
+    // コントラスト調整: 役割別に目標コントラストを設定
+    const bgColor = theme.colors['editor.background'];
+    // 目標 1.5:1
+    const subtleScopes = ['comment', 'punctuation.definition.comment'];
+    // 目標 2.0:1
+    const mainScopes = [
+      'string', 'string.quoted', 'string.regexp',
+      'keyword', 'keyword.control', 'storage.type', 'storage.modifier',
+      'entity.name.function', 'support.function',
+      'entity.name.class', 'entity.name.type', 'support.class', 'support.type',
+      'constant', 'constant.language', 'constant.numeric',
+      'entity.name.tag', 'entity.other.attribute-name',
+      'meta.decorator', 'punctuation.decorator',
+      'markup.heading', 'markup.inline.raw',
+    ];
+
+    theme.tokenColors = theme.tokenColors.map(token => {
+      if (!token.settings?.foreground || !token.scope) return token;
+
+      const scopes = Array.isArray(token.scope) ? token.scope : [token.scope];
+      const isSubtle = scopes.some(s => subtleScopes.some(sub => s.includes(sub)));
+      const isMain = scopes.some(s => mainScopes.some(main => s.includes(main)));
+
+      let targetContrast = null;
+      if (isSubtle) {
+        targetContrast = 1.5;
+      } else if (isMain) {
+        targetContrast = 2.0;
+      }
+
+      if (targetContrast) {
+        const adjusted = ensureContrast(token.settings.foreground, bgColor, targetContrast);
+        return {
+          ...token,
+          settings: { ...token.settings, foreground: adjusted }
+        };
+      }
+      return token;
+    });
   }
+
+  // UI色のコントラスト調整
+  if (theme.colors) {
+    const editorBg = theme.colors['editor.background'];
+
+    // ブラケット色 (目標 2.2:1)
+    for (let i = 1; i <= 6; i++) {
+      const key = `editorBracketHighlight.foreground${i}`;
+      if (theme.colors[key]) {
+        theme.colors[key] = ensureContrast(theme.colors[key], editorBg, 2.2);
+      }
+    }
+
+    // 薄い foreground (目標 1.8:1)
+    const subtleForegrounds = [
+      'editorLineNumber.foreground',
+      'input.placeholderForeground',
+      'panelTitle.inactiveForeground',
+      'gitDecoration.ignoredResourceForeground',
+      'activityBar.inactiveForeground',
+      'commandCenter.inactiveForeground',
+    ];
+
+    // メイン foreground (目標 2.5:1)
+    const mainForegrounds = [
+      'sideBarTitle.foreground',
+      'sideBarSectionHeader.foreground',
+      'activityBar.foreground',
+      'editorLineNumber.activeForeground',
+      'tab.inactiveForeground',
+      'list.highlightForeground',
+      'panelTitle.activeForeground',
+      'textLink.foreground',
+      'textLink.activeForeground',
+      'editorCursor.foreground',
+    ];
+
+    // 背景とペアでコントラスト調整
+    const bgPairs = {
+      'sideBar.foreground': 'sideBar.background',
+      'sideBarTitle.foreground': 'sideBar.background',
+      'sideBarSectionHeader.foreground': 'sideBarSectionHeader.background',
+      'activityBar.foreground': 'activityBar.background',
+      'activityBar.inactiveForeground': 'activityBar.background',
+    };
+
+    for (const key of subtleForegrounds) {
+      if (theme.colors[key]) {
+        const bg = bgPairs[key] ? theme.colors[bgPairs[key]] : editorBg;
+        theme.colors[key] = ensureContrast(theme.colors[key], bg, 1.8);
+      }
+    }
+
+    for (const key of mainForegrounds) {
+      if (theme.colors[key]) {
+        const bg = bgPairs[key] ? theme.colors[bgPairs[key]] : editorBg;
+        theme.colors[key] = ensureContrast(theme.colors[key], bg, 2.5);
+      }
+    }
+  }
+
   fs.writeFileSync(outputPath, JSON.stringify(theme, null, 2) + '\n');
   console.log(`Generated: ${outputFile}`);
 }
@@ -76,6 +173,6 @@ function generateQinshi(inputFile) {
 // 対象ファイル
 const targets = ['elypink-light.json', 'elypink-dark.json'];
 
-console.log(`Hue shift: ${HUE_SHIFT}° (335° -> 200°)`);
+console.log('Hue mirror: 90° axis (h\' = 180 - h)');
 targets.forEach(generateQinshi);
 console.log('Done!');

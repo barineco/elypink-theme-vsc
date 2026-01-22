@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { processColors, hexToRgb, rgbToHex, rgbToHsb, hsbToRgb } = require('./lib/color-utils');
+const { hexToRgb, rgbToHex, rgbToHsb, hsbToRgb } = require('./lib/color-utils');
 
 // 背景系
 const BACKGROUND_KEYS = [
@@ -11,6 +11,9 @@ const BACKGROUND_KEYS = [
   'border',
   'shadow',
 ];
+
+// ターミナル背景
+const TERMINAL_BACKGROUND_KEY = 'terminal.background';
 
 // ターミナルANSI
 const TERMINAL_ANSI_KEYS = [
@@ -32,7 +35,6 @@ const FOREGROUND_KEYS = [
 
 // 明度反転対象
 const INVERT_KEYS = [
-  'gitDecoration.',
   'editorGutter.',
 ];
 
@@ -40,6 +42,7 @@ const INVERT_KEYS = [
 const PRESERVE_KEYS = [
   'badge.background',
   'activityBarBadge.background',
+  'gitDecoration.',
 ];
 
 // 選択範囲系 (明度反転処理)
@@ -50,6 +53,20 @@ const SELECTION_KEYS = [
   'findMatchHighlightBackground',
   'selectionHighlight',
   'selection.background',
+];
+
+// リスト背景系 (やや明るめの背景)
+const LIST_BACKGROUND_KEYS = [
+  'list.activeSelectionBackground',
+  'list.hoverBackground',
+  'list.inactiveSelectionBackground',
+  'quickInputList.focusBackground',
+];
+
+// サイドバー背景系 (より暗い背景)
+const SIDEBAR_BACKGROUND_KEYS = [
+  'sideBar.background',
+  'sideBarSectionHeader.background',
 ];
 
 function isBackgroundKey(key) {
@@ -72,6 +89,10 @@ function isTerminalSelectionKey(key) {
   return TERMINAL_SELECTION_KEYS.some((pattern) => key.includes(pattern));
 }
 
+function isTerminalBackgroundKey(key) {
+  return key === TERMINAL_BACKGROUND_KEY;
+}
+
 function isInvertKey(key) {
   return INVERT_KEYS.some((pattern) => key.includes(pattern));
 }
@@ -80,14 +101,46 @@ function isPreserveKey(key) {
   return PRESERVE_KEYS.some((pattern) => key.includes(pattern));
 }
 
+function isListBackgroundKey(key) {
+  return LIST_BACKGROUND_KEYS.some((pattern) => key === pattern);
+}
+
+function isSidebarBackgroundKey(key) {
+  return SIDEBAR_BACKGROUND_KEYS.some((pattern) => key === pattern);
+}
+
 // 背景色の変換:
 // 明度を下げる, 彩度を上げる
-function transformBackground(hexColor) {
+function transformBackground(hexColor, { minBrightness = 0.05, maxBrightness = 0.25, brightnessFactor = 0.25, saturationFactor = 2.5 } = {}) {
   const rgb = hexToRgb(hexColor);
   if (!rgb) return hexColor;
   const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
-  const newBrightness = Math.max(0.06, Math.min(0.25, hsb.b * 0.22))
-  const newSaturation = Math.min(1, hsb.s * 2.0);
+  const newBrightness = Math.max(minBrightness, Math.min(maxBrightness, hsb.b * brightnessFactor));
+  const newSaturation = Math.min(1, hsb.s * saturationFactor);
+  const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
+  return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
+}
+
+// リスト背景色の変換:
+// 通常の背景より明度を高めに設定
+function transformListBackground(hexColor) {
+  return transformBackground(hexColor, { minBrightness: 0.05, maxBrightness: 0.3, brightnessFactor: 0.25 });
+}
+
+// サイドバー背景色の変換:
+// 通常の背景より明度を低めに設定
+function transformSidebarBackground(hexColor) {
+  return transformBackground(hexColor, { minBrightness: 0.02, maxBrightness: 0.15, brightnessFactor: 0.20 });
+}
+
+// ターミナル背景の変換:
+// Lightのピンク背景をやや暗くするだけ
+function transformTerminalBackground(hexColor) {
+  const rgb = hexToRgb(hexColor);
+  if (!rgb) return hexColor;
+  const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+  const newBrightness = Math.max(0.30, hsb.b * 0.75);
+  const newSaturation = Math.min(1, hsb.s * 1.3);
   const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
   return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
 }
@@ -149,12 +202,12 @@ function transformInvert(hexColor) {
   return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
 }
 
-// 色維持 (少しだけ暗く)
+// 色維持 (明度そのまま)
 function transformPreserve(hexColor) {
   const rgb = hexToRgb(hexColor);
   if (!rgb) return hexColor;
   const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
-  const newBrightness = hsb.b * 0.8;
+  const newBrightness = hsb.b * 1.0;
   const newSaturation = Math.min(1, hsb.s * 1.1);
   const newRgb = hsbToRgb(hsb.h, newSaturation, newBrightness);
   return rgbToHex(newRgb.r, newRgb.g, newRgb.b, rgb.a);
@@ -179,12 +232,18 @@ function transformColors(colors) {
       result[key] = value;
       continue;
     }
-    if (isTerminalSelectionKey(key)) {
+    if (isTerminalBackgroundKey(key)) {
+      result[key] = transformTerminalBackground(value);
+    } else if (isTerminalSelectionKey(key)) {
       result[key] = transformTerminalSelection(value);
     } else if (isTerminalAnsiKey(key)) {
       result[key] = transformTerminalAnsi(value);
     } else if (isSelectionKey(key)) {
       result[key] = transformSelection(value);
+    } else if (isListBackgroundKey(key)) {
+      result[key] = transformListBackground(value);
+    } else if (isSidebarBackgroundKey(key)) {
+      result[key] = transformSidebarBackground(value);
     } else if (isPreserveKey(key)) {
       result[key] = transformPreserve(value);
     } else if (isInvertKey(key)) {

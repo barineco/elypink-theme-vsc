@@ -1,26 +1,29 @@
 # Elypink Theme
 
-Visual Studio Code (および互換ソフトウェア) 用のテーマアドオンです。
+A theme addon for Visual Studio Code (and compatible software).
+
+![Elypink Light](images/elypink-light.png)
+
+![Elypink Dark](images/elypink-dark.png)
+
+## Theme List
+
+### Light
+
+- Elypink Light — Pink base theme
+- Elypink Light Subtle — 20% reduced saturation
+- Qinshi Light — Auspicious cyan for hackers
+
+### Dark
+
+- Elypink Dark — Pink dark theme
+- Elypink Dark Subtle — 20% reduced saturation dark
+- Qinshi Dark — Auspicious cyan for hackers, dark
 
 
-## テーマ一覧
+## Scripts
 
-### ライト
-
-- Elypink Light — ピンクのベーステーマ
-- Elypink Light Subtle — 彩度二割引き版
-- Qinshi Light — ハッカーには縁起の良いシアン
-
-### ダーク
-
-- Elypink Dark — ピンクのダークテーマ
-- Elypink Dark Subtle — 彩度二割引きのダーク版
-- Qinshi Dark — ハッカーには縁起の良いシアン・ダーク版
-
-
-## スクリプト
-
-単一のソースファイル `themes/elypink-light.json` をベースとし、他のテーマはすべてこのファイルから色変換スクリプトで作成されます。
+All themes are generated from a single source file `themes/elypink-light.json` using color transformation scripts.
 
 ``` mermaid
 flowchart LR
@@ -41,124 +44,13 @@ flowchart LR
 ```
 
 ``` bash
-# 実行順序
+# Execution order
 node scripts/generate-dark.js
 node scripts/generate-qinshi.js
 node scripts/generate-subtle.js
 ```
 
 
-## 色変換ユーティリティ
-
-`scripts/lib/color-utils.js` 
-
-``` javascript
-const { processColors, hexToRgb, rgbToHex, rgbToHsb, hsbToRgb } = require('./lib/color-utils');
-
-// オブジェクト内の色を再起的に彩度0.8倍に変換
-const transformer = (hsb) => ({
-  h: hsb.h,         // 色相 (0-360)
-  s: hsb.s * 0.8,   // 彩度 (0-1)
-  b: hsb.b,         // 明度 (0-1)
-});
-
-theme.colors = processColors(theme.colors, transformer);
-```
-
-
-## ダークテーマ作成 `generate-dark.js`
-
-キーのカテゴリ別に異なる変換を適用。
-
-- 背景 (`*background*`, `*border*`, `*shadow*`)
-  - 明度 × 0.22 (0.06〜0.25)
-  - 彩度 × 2.0
-
-- 前景 (`*foreground*`, `*Foreground*`)
-  - 明度 → 0.7 + b × 0.3
-  - 彩度 × 1.3
-
-- 選択範囲 (`*selectionBackground*`, `*findMatch*`, `*selectionHighlight*`, `*wordHighlight*`)
-  - 明度 → 0.4 + b × 0.3
-  - 彩度 × 1.2
-
-- ターミナル ANSI (`terminal.ansi*`, `terminal.ansiBright*`)
-  - 明度 → 0.75 + b × 0.2
-  - 彩度 × 1.05
-
-- ターミナル選択範囲 (`terminal.selectionBackground`, `terminalOverviewRuler.cursorForeground`)
-  - 明度 → 0.4 + b × 0.3
-  - 彩度 × 1.2
-
-- 明度反転 (`gitDecoration.*`, `editorGutter.*`)
-  - 明度 → 1 − b
-  - 彩度 × 1.1
-
-- 色維持 (`badge.background`, `activityBarBadge.background`)
-  - 明度 × 0.8
-  - 彩度 × 1.1
-
-- トークン色 (tokenColors)
-  - 明度 → 0.75 + b × 0.2
-  - 彩度 × 1.4
-
-## シアンテーマ作成 `generate-qinshi.js`
-
-色相回転によりシアン系に変換する。
-
-- 一般色 (全キー)
-  - 色相 −130° (ピンク 335° → シアン 205°)
-  - 彩度 × 0.7
-  - 明度 × 0.9
-
-- ターミナル選択範囲 (`terminal.selectionBackground`)
-  - 色相 +130° (一般色と逆方向)
-  - 彩度 × 0.7
-  - 明度 × 0.9
-
-## 彩度低減 `generate-subtle.js`
-
-- 全ての色 (全キー)
-  - 彩度 × 0.8
-
-## カスタム変換の追加
-
-`scripts/` に新しいスクリプトを作成して、独自のテーマバリアントを生成できます。
-
-```javascript
-#!/usr/bin/env node
-
-const fs = require('fs');
-const path = require('path');
-const { processColors } = require('./lib/color-utils');
-
-// 色相を +60° 回転
-const transformer = (hsb) => ({
-  h: (hsb.h + 60) % 360,
-  s: hsb.s,
-  b: hsb.b,
-});
-
-const themesDir = path.join(__dirname, '..', 'themes');
-const theme = JSON.parse(fs.readFileSync(path.join(themesDir, 'elypink-light.json'), 'utf8'));
-
-theme.name = theme.name + ' Custom';
-theme.colors = processColors(theme.colors, transformer);
-theme.tokenColors = processColors(theme.tokenColors, transformer);
-
-fs.writeFileSync(path.join(themesDir, 'elypink-light-custom.json'), JSON.stringify(theme, null, 2) + '\n');
-```
-
-## ビルド
-
-個人用ユーティリティ。
-
-バージョンをインクリメントして vsce package を実行。
-
-```bash
-./build.sh
-```
-
-## ライセンス
+## License
 
 MIT

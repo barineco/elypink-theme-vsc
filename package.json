@@ -2,7 +2,7 @@
   "name": "elypink-theme",
   "displayName": "Elypink Theme",
   "description": "lovely theme for VSC",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "barineco",
   "engines": {
     "vscode": "^1.70.0"
@@ -51,7 +51,12 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/barineco/elypink-theme-vsc"
+  },
+  "icon": "images/elypink-light.png",
+  "galleryBanner": {
+    "color": "#DEA4BD",
+    "theme": "light"
   },
   "license": "MIT",
   "scripts": {
