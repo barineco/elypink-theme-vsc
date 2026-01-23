@@ -2,7 +2,7 @@
   "name": "elypink-theme",
   "displayName": "Elypink Theme",
   "description": "lovely theme for VSC",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "publisher": "barineco",
   "engines": {
     "vscode": "^1.70.0"
@@ -23,14 +23,24 @@
         "path": "./themes/elypink-light.json"
       },
       {
-        "label": "Elypink Light Subtle",
+        "label": "Elypink Light (Faded)",
         "uiTheme": "vs",
-        "path": "./themes/elypink-light-subtle.json"
+        "path": "./themes/elypink-light-faded.json"
       },
       {
-        "label": "Qinshi Light",
+        "label": "Elypink Light (Spring)",
         "uiTheme": "vs",
-        "path": "./themes/elypink-light-qinshi.json"
+        "path": "./themes/elypink-light-spring.json"
+      },
+      {
+        "label": "Elypink Light (Summer)",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light-summer.json"
+      },
+      {
+        "label": "Elypink Light (Diamond)",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light-diamond.json"
       },
       {
         "label": "Elypink Dark",
@@ -38,14 +48,9 @@
         "path": "./themes/elypink-dark.json"
       },
       {
-        "label": "Elypink Dark Subtle",
+        "label": "Elypink Dark (Faded)",
         "uiTheme": "vs-dark",
-        "path": "./themes/elypink-dark-subtle.json"
-      },
-      {
-        "label": "Qinshi Dark",
-        "uiTheme": "vs-dark",
-        "path": "./themes/elypink-dark-qinshi.json"
+        "path": "./themes/elypink-dark-faded.json"
       }
     ]
   },
@@ -60,8 +65,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "generate-subtle": "node scripts/generate-subtle.js",
-    "generate-qinshi": "node scripts/generate-qinshi.js",
-    "generate-dark": "node scripts/generate-dark.js"
+    "generate": "node scripts/generate-all.js",
+    "check-contrast": "node utils/check-contrast.js",
+    "analyze": "node utils/analyze-colors.js"
   }
 }

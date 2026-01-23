@@ -1,55 +1,49 @@
 # Elypink Theme
 
-A theme addon for Visual Studio Code (and compatible software).
+A pink-based theme collection for Visual Studio Code and VSCodium.
 
 ![Elypink Light](images/elypink-light.png)
-
 ![Elypink Dark](images/elypink-dark.png)
 
-## Theme List
+- [日本語](README-ja.md)
+- [简体中文](README-zh.md)
+
+## Features
+
+- Pink-based color palette — Warm and soft visual experience
+- Contrast-optimized — Designed with WCAG/APCA contrast calculations for readability
+- Color-filtered variants — Multiple variants with different color transformations
+- Light & Dark modes — Each variant available in both modes
+
+## Theme Variants
 
 ### Light
 
-- Elypink Light — Pink base theme
-- Elypink Light Subtle — 20% reduced saturation
-- Qinshi Light — Auspicious cyan for hackers
+| Theme | Description |
+|-------|-------------|
+| Elypink Light | Standard pink theme (recommended) |
+| Elypink Light (Faded) | Cyan-shifted UI with hue rotation |
+| Elypink Light (Spring) | Warm red-pink overlay |
+| Elypink Light (Summer) | Cool blue overlay |
+| Elypink Light (Diamond) | Fresh cyan overlay |
 
 ### Dark
 
-- Elypink Dark — Pink dark theme
-- Elypink Dark Subtle — 20% reduced saturation dark
-- Qinshi Dark — Auspicious cyan for hackers, dark
+| Theme | Description |
+|-------|-------------|
+| Elypink Dark | Standard pink dark theme |
+| Elypink Dark (Faded) | Cyan-shifted UI with hue rotation |
 
+## Installation
 
-## Scripts
+### VS Code / VSCodium
 
-All themes are generated from a single source file `themes/elypink-light.json` using color transformation scripts.
+Search for "Elypink" in the Extensions marketplace.
 
-``` mermaid
-flowchart LR
-    L["Elypink Light"] -->|"dark"| D["Elypink Dark"]
+### Manual
 
-    L -->|"subtle"| LS["Elypink Light Subtle"]
-    L -->|"qinshi"| LQ["Qinshi Light"]
-
-    D -->|"subtle"| DS["Elypink Dark Subtle"]
-    D -->|"qinshi"| DQ["Qinshi Dark"]
-
-    style L fill:#F9EBF2,stroke:#B25A7F,color:#5A4751
-    style D fill:#373134,stroke:#E85392,color:#CD95B3
-    style LS fill:#F9EEF3,stroke:#B26C89,color:#5A4B53
-    style LQ fill:#D7DDE0,stroke:#6989A0,color:#454D51
-    style DS fill:#373235,stroke:#E871A3,color:#CDA0B8
-    style DQ fill:#2E3032,stroke:#73AAD1,color:#95AEB9
-```
-
-``` bash
-# Execution order
-node scripts/generate-dark.js
-node scripts/generate-qinshi.js
-node scripts/generate-subtle.js
-```
-
+1. Download the `.vsix` file from [Releases](https://github.com/barineco/elypink-theme-vsc/releases)
+2. Run: `code --install-extension elypink-theme-*.vsix`
 
 ## License
 

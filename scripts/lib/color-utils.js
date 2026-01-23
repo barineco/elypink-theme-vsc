@@ -126,7 +126,70 @@ function contrastRatio(lum1, lum2) {
   return (Math.max(lum1, lum2) + 0.05) / (Math.min(lum1, lum2) + 0.05);
 }
 
-// 背景に対してコントラスト比を確保するよう輝度を調整
+// APCA (Accessible Perceptual Contrast Algorithm)
+// 参考: https://github.com/Myndex/SAPC-APCA
+function calcAPCA(fgHex, bgHex) {
+  const fg = hexToRgb(fgHex);
+  const bg = hexToRgb(bgHex);
+  if (!fg || !bg) return 0;
+
+  // sRGB to Y (luminance) with APCA coefficients
+  function sRGBtoY(rgb) {
+    const mainTRC = 2.4;
+    const sRco = 0.2126729;
+    const sGco = 0.7151522;
+    const sBco = 0.0721750;
+
+    function simpleExp(chan) {
+      return Math.pow(chan / 255, mainTRC);
+    }
+
+    return sRco * simpleExp(rgb.r) + sGco * simpleExp(rgb.g) + sBco * simpleExp(rgb.b);
+  }
+
+  const Ytxt = sRGBtoY(fg);
+  const Ybg = sRGBtoY(bg);
+
+  // APCA constants
+  const normBG = 0.56;
+  const normTXT = 0.57;
+  const revTXT = 0.62;
+  const revBG = 0.65;
+  const blkThrs = 0.022;
+  const blkClmp = 1.414;
+  const scaleBoW = 1.14;
+  const scaleWoB = 1.14;
+  const loBoWoffset = 0.027;
+  const loWoBoffset = 0.027;
+  const loClip = 0.1;
+
+  // Clamp Y values
+  let txtY = Ytxt > blkThrs ? Ytxt : Ytxt + Math.pow(blkThrs - Ytxt, blkClmp);
+  let bgY = Ybg > blkThrs ? Ybg : Ybg + Math.pow(blkThrs - Ybg, blkClmp);
+
+  // Calculate contrast
+  let SAPC = 0;
+  let outputContrast = 0;
+
+  if (Math.abs(bgY - txtY) < 0.0005) {
+    return 0;
+  }
+
+  if (bgY > txtY) {
+    // Light background, dark text
+    SAPC = (Math.pow(bgY, normBG) - Math.pow(txtY, normTXT)) * scaleBoW;
+    outputContrast = SAPC < loClip ? 0 : SAPC - loBoWoffset;
+  } else {
+    // Dark background, light text
+    SAPC = (Math.pow(bgY, revBG) - Math.pow(txtY, revTXT)) * scaleWoB;
+    outputContrast = SAPC > -loClip ? 0 : SAPC + loWoBoffset;
+  }
+
+  // Return Lc value (multiply by 100 for percentage)
+  return Math.round(outputContrast * 1000) / 10;
+}
+
+// 背景に対してコントラスト比を確保するよう調整
 // targetContrast: 目標コントラスト比
 // bgHex: 背景色 (hex)
 // fgHex: 前景色 (hex)
@@ -161,14 +224,12 @@ function ensureContrast(fgHex, bgHex, targetContrast, saturationBoost = 3.0) {
 
       if (testContrast >= targetContrast) {
         bestB = mid;
-        // 目標達成したら、元の輝度に近づける方向へ
         if (goingDarker) {
           low = mid;
         } else {
           high = mid;
         }
       } else {
-        // 目標未達なら、さらに輝度を変える方向へ
         if (goingDarker) {
           high = mid;
         } else {
@@ -182,7 +243,7 @@ function ensureContrast(fgHex, bgHex, targetContrast, saturationBoost = 3.0) {
   const darkerB = findBestBrightness(true);
   const lighterB = findBestBrightness(false);
 
-  // 両方向の結果を比較して、小さい変化を選択
+  // 両方向の結果を比較し小さい変化を選択
   let bestB = originalB;
   if (darkerB !== null && lighterB !== null) {
     bestB = Math.abs(originalB - darkerB) <= Math.abs(originalB - lighterB) ? darkerB : lighterB;
@@ -210,5 +271,6 @@ module.exports = {
   processColors,
   relativeLuminance,
   contrastRatio,
+  calcAPCA,
   ensureContrast,
 };
