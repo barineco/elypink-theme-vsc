@@ -1,0 +1,1142 @@
+# ==============================================================================
+# Elypink Dark Theme - Master Definition
+# ==============================================================================
+
+# ==============================================================================
+# Syntax Colors
+# ==============================================================================
+
+# Syntax color anchors
+SYN_COMMENT:      &SYN_COMMENT      '#A37FB7'
+
+SYN_VARIABLE:     &SYN_VARIABLE     '#CA8AFF'
+
+SYN_STRING:       &SYN_STRING       '#FFD47E'
+
+SYN_NUMBER:       &SYN_NUMBER       '#21E05D'
+
+SYN_ATTRIBUTE:    &SYN_ATTRIBUTE    '#F982F9'
+SYN_CONSTANT:     &SYN_CONSTANT     '#FF83D1'
+SYN_KEYWORD:      &SYN_KEYWORD      '#FF95D2'
+SYN_OPERATOR:     &SYN_OPERATOR     '#FF94D1'
+SYN_FUNCTION:     &SYN_FUNCTION     '#FF8CFF'
+
+SYN_REGEXP:       &SYN_REGEXP       '#43BFEF'
+SYN_CODE_INLINE:  &SYN_CODE_INLINE  '#51CCF2'
+SYN_DECORATOR:    &SYN_DECORATOR    '#5DCDF2'
+SYN_CLASS:        &SYN_CLASS        '#5EDCFF'
+SYN_BRACKET:      &SYN_BRACKET      '#72C9EA'
+SYN_PROPERTY:     &SYN_PROPERTY     '#7BE7FF'
+
+SYN_TAG:          &SYN_TAG          '#FF76A3'
+SYN_HEADING:      &SYN_HEADING      '#FF77A4'
+SYN_KEYWORD_FLOW: &SYN_KEYWORD_FLOW '#FF85C6'
+
+# ==============================================================================
+# Semantic Colors (Git, brackets, etc.)
+# ==============================================================================
+
+SEMANTIC_GIT_ADDED: &SEMANTIC_GIT_ADDED '#00B721'
+SEMANTIC_GIT_MODIFIED: &SEMANTIC_GIT_MODIFIED '#FFCC00'
+SEMANTIC_GIT_DELETED: &SEMANTIC_GIT_DELETED '#FF0015'
+SEMANTIC_GIT_UNTRACKED_FG: &SEMANTIC_GIT_UNTRACKED_FG '#D57BFF'
+SEMANTIC_GIT_MODIFIED_FG: &SEMANTIC_GIT_MODIFIED_FG '#FF61D5'
+SEMANTIC_GIT_DELETED_FG: &SEMANTIC_GIT_DELETED_FG '#FF747F'
+DARK_GIT_IGNORED_FG: &DARK_GIT_IGNORED_FG '#DAA8C9C0'
+
+# ==============================================================================
+# Dark Theme UI Colors
+# ==============================================================================
+
+# Backgrounds
+DARK_BG_PURE:               &DARK_BG_PURE               '#000000'
+DARK_BG_L0:                 &DARK_BG_L0                 '#30292D'
+DARK_BG_L1:                 &DARK_BG_L1                 '#2A1D25'
+DARK_BG_L2:                 &DARK_BG_L2                 '#3E343A'
+DARK_BG_SECTION:            &DARK_BG_SECTION            '#3A2C33'
+DARK_BG_TITLEBAR_ACTIVE:    &DARK_BG_TITLEBAR_ACTIVE    '#3D2935'
+DARK_BG_TITLEBAR_INACTIVE:  &DARK_BG_TITLEBAR_INACTIVE  '#402636'
+DARK_BG_ACTIVITY:           &DARK_BG_ACTIVITY           '#1F171A'
+DARK_BG_HOVER:              &DARK_BG_HOVER              '#3A2F34'
+DARK_BG_ACTIVE:             &DARK_BG_ACTIVE             '#3D1A24'
+
+# Borders
+DARK_BORDER_PANEL: &DARK_BORDER_PANEL '#46383c'
+DARK_BORDER_BASE: &DARK_BORDER_BASE '#24151b'
+DARK_BORDER_FOCUS: &DARK_BORDER_FOCUS '#6b4454'
+DARK_BORDER_TRANSPARENT: &DARK_BORDER_TRANSPARENT '#00000000'
+
+# Indent guides
+DARK_INDENT_BASE: &DARK_INDENT_BASE '#24151b'
+DARK_INDENT_ACTIVE: &DARK_INDENT_ACTIVE '#3a2229'
+
+# Toolbar
+DARK_TOOLBAR_HOVER: &DARK_TOOLBAR_HOVER '#FF58B75B'
+
+# Buttons
+DARK_BUTTON_BG: &DARK_BUTTON_BG '#7e3652'
+DARK_BUTTON_HOVER: &DARK_BUTTON_HOVER '#FF58B75B'
+
+# Terminal sticky scroll
+DARK_TERMINAL_STICKY: &DARK_TERMINAL_STICKY '#4a2531'
+DARK_TERMINAL_STICKY_HOVER: &DARK_TERMINAL_STICKY_HOVER '#5e323f'
+
+# Selection & Highlight
+DARK_SELECTION_BASE: &DARK_SELECTION_BASE '#24000c'
+DARK_SELECTION: &DARK_SELECTION '#FF58B730'
+DARK_BRACKET_MATCH_BG: &DARK_BRACKET_MATCH_BG '#00000000'
+
+# Accent colors
+DARK_ACCENT_PRIMARY: &DARK_ACCENT_PRIMARY '#FF52A5'
+
+# Scrollbar
+DARK_SCROLLBAR: &DARK_SCROLLBAR '#FF58B730'
+DARK_SCROLLBAR_HOVER: &DARK_SCROLLBAR_HOVER '#FF58B75B'
+
+# Tabs & Toolbar
+DARK_TAB_ACTIVE_BG: &DARK_TAB_ACTIVE_BG '#FF66AB19'
+
+# Foregrounds
+DARK_FG_PRIMARY: &DARK_FG_PRIMARY '#E5C0D9'
+DARK_FG_SECONDARY: &DARK_FG_SECONDARY '#DAA2C8'
+DARK_FG_ON_DARK: &DARK_FG_ON_DARK '#ffffff'
+DARK_FG_UI_PRIMARY: &DARK_FG_UI_PRIMARY '#e8c9dc'
+DARK_FG_UI_INACTIVE: &DARK_FG_UI_INACTIVE '#D28EAE'
+
+# Input & Dropdown
+DARK_INPUT_BG: &DARK_INPUT_BG '#1a1014'
+
+# Terminal
+DARK_TERMINAL_BG: &DARK_TERMINAL_BG '#41182C'
+DARK_TERMINAL_FG: &DARK_TERMINAL_FG '#efc9dd'
+DARK_TERMINAL_SELECTION: &DARK_TERMINAL_SELECTION '#2f7ea880'
+
+# Terminal ANSI Colors
+DARK_ANSI_BLACK: &DARK_ANSI_BLACK '#000000'
+DARK_ANSI_RED: &DARK_ANSI_RED '#ff5baa'
+DARK_ANSI_GREEN: &DARK_ANSI_GREEN '#00d600'
+DARK_ANSI_YELLOW: &DARK_ANSI_YELLOW '#f3bb00'
+DARK_ANSI_BLUE: &DARK_ANSI_BLUE '#00afff'
+DARK_ANSI_MAGENTA: &DARK_ANSI_MAGENTA '#f56fff'
+DARK_ANSI_CYAN: &DARK_ANSI_CYAN '#00e6e6'
+DARK_ANSI_WHITE: &DARK_ANSI_WHITE '#f5f5f5'
+DARK_ANSI_BRIGHT_BLACK: &DARK_ANSI_BRIGHT_BLACK '#232323'
+DARK_ANSI_BRIGHT_RED: &DARK_ANSI_BRIGHT_RED '#FF87C2'
+DARK_ANSI_BRIGHT_GREEN: &DARK_ANSI_BRIGHT_GREEN '#62ff62'
+DARK_ANSI_BRIGHT_YELLOW: &DARK_ANSI_BRIGHT_YELLOW '#fcd74f'
+DARK_ANSI_BRIGHT_BLUE: &DARK_ANSI_BRIGHT_BLUE '#54d4ff'
+DARK_ANSI_BRIGHT_MAGENTA: &DARK_ANSI_BRIGHT_MAGENTA '#F98FFF'
+DARK_ANSI_BRIGHT_CYAN: &DARK_ANSI_BRIGHT_CYAN '#60ffff'
+
+# ==============================================================================
+# Theme Definition
+# ==============================================================================
+
+name: Elypink Dark (Ripples)
+type: dark
+colors:
+  editor.background: *DARK_BG_L0
+  editor.foreground: *DARK_FG_PRIMARY
+  editorLineNumber.foreground: *DARK_FG_SECONDARY
+  editorLineNumber.activeForeground: *DARK_FG_SECONDARY
+  editorCursor.foreground: *DARK_FG_SECONDARY
+  editor.lineHighlightBackground: *DARK_BG_L2
+  editor.selectionBackground: *DARK_SELECTION
+  editor.wordHighlightBackground: *DARK_SELECTION
+  editor.findMatchBackground: *DARK_SELECTION
+  editor.findMatchHighlightBackground: *DARK_SELECTION
+  editorIndentGuide.background: *DARK_INDENT_BASE
+  editorIndentGuide.activeBackground: *DARK_INDENT_ACTIVE
+  editorRuler.foreground: *DARK_BORDER_BASE
+  editorBracketMatch.background: *DARK_BRACKET_MATCH_BG
+  editorBracketMatch.border: *DARK_BORDER_FOCUS
+  editorBracketHighlight.foreground1: *SYN_BRACKET
+  editorBracketHighlight.foreground2: *SYN_BRACKET
+  editorBracketHighlight.foreground3: *SYN_BRACKET
+  editorBracketHighlight.foreground4: *SYN_BRACKET
+  editorBracketHighlight.foreground5: *SYN_BRACKET
+  editorBracketHighlight.foreground6: *SYN_BRACKET
+  editorGutter.addedBackground: *SEMANTIC_GIT_ADDED
+  editorGutter.modifiedBackground: *SEMANTIC_GIT_MODIFIED
+  editorGutter.deletedBackground: *SEMANTIC_GIT_DELETED
+  editorWidget.background: *DARK_BG_L0
+  editorWidget.border: *DARK_BORDER_BASE
+  scrollbarSlider.background: *DARK_SCROLLBAR
+  scrollbarSlider.hoverBackground: *DARK_SCROLLBAR_HOVER
+  scrollbarSlider.activeBackground: *DARK_SCROLLBAR_HOVER
+  minimap.selectionHighlight: *DARK_SCROLLBAR
+  peekView.border: *DARK_ACCENT_PRIMARY
+  peekViewEditor.background: *DARK_BG_L0
+  peekViewResult.background: *DARK_BG_L1
+  peekViewTitle.background: *DARK_BG_L1
+  sideBar.background: *DARK_BG_L1
+  sideBar.foreground: *DARK_FG_PRIMARY
+  sideBarTitle.foreground: *DARK_ACCENT_PRIMARY
+  sideBarSectionHeader.background: *DARK_BG_SECTION
+  sideBarSectionHeader.foreground: *DARK_ACCENT_PRIMARY
+  gitDecoration.modifiedResourceForeground: *SEMANTIC_GIT_MODIFIED_FG
+  gitDecoration.deletedResourceForeground: *SEMANTIC_GIT_DELETED_FG
+  gitDecoration.untrackedResourceForeground: *SEMANTIC_GIT_UNTRACKED_FG
+  gitDecoration.ignoredResourceForeground: *DARK_GIT_IGNORED_FG
+  activityBar.background: *DARK_BG_SECTION
+  activityBar.foreground: *DARK_FG_UI_PRIMARY
+  activityBar.inactiveForeground: *DARK_FG_UI_INACTIVE
+  activityBarBadge.background: *DARK_ACCENT_PRIMARY
+  activityBarBadge.foreground: *DARK_FG_ON_DARK
+  titleBar.activeBackground: *DARK_BG_TITLEBAR_ACTIVE
+  titleBar.activeForeground: *DARK_FG_UI_PRIMARY
+  titleBar.inactiveBackground: *DARK_BG_TITLEBAR_INACTIVE
+  titleBar.inactiveForeground: *DARK_FG_UI_INACTIVE
+  titleBar.hoverBackground: *DARK_BG_L2
+  windowControlsOverlay.background: *DARK_BG_TITLEBAR_ACTIVE
+  menubar.selectionBackground: *DARK_BG_ACTIVE
+  menubar.selectionForeground: *DARK_FG_UI_PRIMARY
+  commandCenter.background: *DARK_BG_L1
+  commandCenter.foreground: *DARK_FG_PRIMARY
+  commandCenter.activeBackground: *DARK_BG_L1
+  commandCenter.activeForeground: *DARK_FG_PRIMARY
+  commandCenter.border: *DARK_BORDER_BASE
+  commandCenter.activeBorder: *DARK_BG_TITLEBAR_INACTIVE
+  commandCenter.inactiveForeground: *DARK_FG_PRIMARY
+  commandCenter.inactiveBorder: *DARK_BORDER_BASE
+  toolbar.hoverBackground: *DARK_TOOLBAR_HOVER
+  toolbar.activeBackground: *DARK_TOOLBAR_HOVER
+  icon.foreground: *DARK_FG_UI_PRIMARY
+  tab.activeBackground: *DARK_TAB_ACTIVE_BG
+  tab.activeForeground: *DARK_ACCENT_PRIMARY
+  tab.inactiveBackground: *DARK_BG_L1
+  tab.inactiveForeground: *DARK_FG_UI_INACTIVE
+  tab.border: *DARK_BORDER_TRANSPARENT
+  tab.activeBorder: *DARK_ACCENT_PRIMARY
+  tab.activeBorderTop: *DARK_BORDER_TRANSPARENT
+  editorGroupHeader.tabsBackground: *DARK_BG_L1
+  statusBar.background: *DARK_BG_TITLEBAR_INACTIVE
+  statusBar.foreground: *DARK_FG_UI_PRIMARY
+  statusBar.debuggingBackground: *DARK_BG_TITLEBAR_ACTIVE
+  statusBar.noFolderBackground: *DARK_BG_TITLEBAR_INACTIVE
+  statusBar.focusBorder: *DARK_ACCENT_PRIMARY
+  statusBarItem.hoverBackground: *DARK_TAB_ACTIVE_BG
+  statusBarItem.hoverForeground: *DARK_FG_UI_PRIMARY
+  statusBarItem.activeBackground: *DARK_BG_ACTIVE
+  statusBarItem.focusBorder: *DARK_ACCENT_PRIMARY
+  statusBarItem.remoteBackground: *DARK_BUTTON_BG
+  statusBarItem.remoteForeground: *DARK_FG_ON_DARK
+  statusBarItem.remoteHoverBackground: *DARK_BUTTON_HOVER
+  statusBarItem.remoteHoverForeground: *DARK_FG_ON_DARK
+  statusBarItem.prominentBackground: *DARK_BG_SECTION
+  statusBarItem.prominentForeground: *DARK_FG_UI_PRIMARY
+  statusBarItem.prominentHoverBackground: *DARK_TAB_ACTIVE_BG
+  statusBarItem.prominentHoverForeground: *DARK_FG_UI_PRIMARY
+  statusBarItem.warningBackground: *DARK_BG_ACTIVE
+  statusBarItem.warningForeground: *DARK_FG_UI_PRIMARY
+  statusBarItem.warningHoverBackground: *DARK_TAB_ACTIVE_BG
+  statusBarItem.warningHoverForeground: *DARK_FG_UI_PRIMARY
+  statusBarItem.errorBackground: *DARK_ACCENT_PRIMARY
+  statusBarItem.errorForeground: *DARK_FG_ON_DARK
+  statusBarItem.errorHoverBackground: *DARK_BUTTON_HOVER
+  statusBarItem.errorHoverForeground: *DARK_FG_ON_DARK
+  input.background: *DARK_INPUT_BG
+  input.foreground: *DARK_FG_UI_PRIMARY
+  input.border: *DARK_BORDER_BASE
+  input.placeholderForeground: *DARK_FG_SECONDARY
+  inputOption.activeBorder: *DARK_ACCENT_PRIMARY
+  dropdown.background: *DARK_INPUT_BG
+  dropdown.foreground: *DARK_FG_UI_PRIMARY
+  dropdown.border: *DARK_BORDER_BASE
+  list.activeSelectionBackground: *DARK_BG_L2
+  list.activeSelectionForeground: *DARK_FG_UI_PRIMARY
+  list.hoverBackground: *DARK_BG_L2
+  list.inactiveSelectionBackground: *DARK_BG_L2
+  list.highlightForeground: *DARK_ACCENT_PRIMARY
+  quickInput.background: *DARK_BG_L0
+  quickInput.foreground: *DARK_FG_UI_PRIMARY
+  quickInputList.focusBackground: *DARK_BG_L2
+  quickInputList.focusForeground: *DARK_FG_UI_PRIMARY
+  button.background: *DARK_BUTTON_BG
+  button.foreground: *DARK_FG_ON_DARK
+  button.hoverBackground: *DARK_BUTTON_HOVER
+  badge.background: *DARK_ACCENT_PRIMARY
+  badge.foreground: *DARK_FG_ON_DARK
+  panel.background: *DARK_BG_L1
+  panel.border: *DARK_BORDER_PANEL
+  panelTitle.activeBorder: *DARK_ACCENT_PRIMARY
+  panelTitle.activeForeground: *DARK_ACCENT_PRIMARY
+  panelTitle.inactiveForeground: *DARK_FG_UI_INACTIVE
+  terminal.background: *DARK_TERMINAL_BG
+  terminal.foreground: *DARK_TERMINAL_FG
+  terminal.ansiBlack: *DARK_ANSI_BLACK
+  terminal.ansiRed: *DARK_ANSI_RED
+  terminal.ansiGreen: *DARK_ANSI_GREEN
+  terminal.ansiYellow: *DARK_ANSI_YELLOW
+  terminal.ansiBlue: *DARK_ANSI_BLUE
+  terminal.ansiMagenta: *DARK_ANSI_MAGENTA
+  terminal.ansiCyan: *DARK_ANSI_CYAN
+  terminal.ansiWhite: *DARK_ANSI_WHITE
+  terminal.ansiBrightBlack: *DARK_ANSI_BRIGHT_BLACK
+  terminal.ansiBrightRed: *DARK_ANSI_BRIGHT_RED
+  terminal.ansiBrightGreen: *DARK_ANSI_BRIGHT_GREEN
+  terminal.ansiBrightYellow: *DARK_ANSI_BRIGHT_YELLOW
+  terminal.ansiBrightBlue: *DARK_ANSI_BRIGHT_BLUE
+  terminal.ansiBrightMagenta: *DARK_ANSI_BRIGHT_MAGENTA
+  terminal.ansiBrightCyan: *DARK_ANSI_BRIGHT_CYAN
+  terminal.ansiBrightWhite: *DARK_FG_ON_DARK
+  terminal.selectionBackground: *DARK_TERMINAL_SELECTION
+  terminalStickyScroll.background: *DARK_TERMINAL_STICKY
+  terminalStickyScrollHover.background: *DARK_TERMINAL_STICKY_HOVER
+  focusBorder: *DARK_BORDER_FOCUS
+  textLink.foreground: *DARK_ACCENT_PRIMARY
+  textLink.activeForeground: *DARK_ACCENT_PRIMARY
+  selection.background: *DARK_SCROLLBAR
+  progressBar.background: *DARK_ACCENT_PRIMARY
+  statusBarItem.activeForeground: *DARK_ACCENT_PRIMARY
+  editor.findRangeHighlightBackground: *DARK_SELECTION
+  searchEditor.findMatchBackground: *DARK_SELECTION
+
+tokenColors:
+
+# ==============================================================================
+# General
+# ==============================================================================
+
+  - name: Font style emphasis
+    scope:
+      - emphasis
+    settings:
+      fontStyle: italic
+
+  - name: Font style strong
+    scope:
+      - strong
+    settings:
+      fontStyle: bold
+
+  - name: Invalid
+    scope:
+      - invalid
+    settings:
+      foreground: *SYN_TAG
+      fontStyle: underline italic
+
+  - name: Invalid deprecated
+    scope:
+      - invalid.deprecated
+    settings:
+      foreground: *DARK_FG_PRIMARY
+      fontStyle: underline italic
+
+# ==============================================================================
+# Diffs
+# ==============================================================================
+
+  - name: Diff meta
+    scope:
+      - meta.diff
+      - meta.diff.header
+    settings:
+      foreground: *SYN_COMMENT
+
+  - name: Diff inserted
+    scope:
+      - markup.inserted
+    settings:
+      foreground: *SEMANTIC_GIT_ADDED
+
+  - name: Diff deleted
+    scope:
+      - markup.deleted
+    settings:
+      foreground: *SEMANTIC_GIT_DELETED
+
+  - name: Diff changed
+    scope:
+      - markup.changed
+    settings:
+      foreground: *SEMANTIC_GIT_MODIFIED
+
+# ==============================================================================
+# Markdown / RST / Prose
+# ==============================================================================
+
+  - name: Markup underline
+    scope:
+      - markup.underline
+    settings:
+      fontStyle: underline
+
+  - name: Markup bold
+    scope:
+      - markup.bold
+    settings:
+      fontStyle: bold
+
+  - name: Markup headings
+    scope:
+      - markup.heading
+    settings:
+      foreground: *SYN_HEADING
+      fontStyle: bold
+
+  - name: Markup italic
+    scope:
+      - markup.italic
+    settings:
+      fontStyle: italic
+
+  - name: Bullets, lists (prose)
+    scope:
+      - beginning.punctuation.definition.list.markdown
+      - beginning.punctuation.definition.quote.markdown
+      - punctuation.definition.link.restructuredtext
+    settings:
+      foreground: *SYN_OPERATOR
+
+  - name: Inline code (prose)
+    scope:
+      - markup.inline.raw
+      - markup.raw.restructuredtext
+    settings:
+      foreground: *SYN_CODE_INLINE
+
+  - name: Links (prose)
+    scope:
+      - markup.underline.link
+      - markup.underline.link.image
+    settings:
+      foreground: *SYN_PROPERTY
+
+  - name: Link text, image alt text (prose)
+    scope:
+      - meta.link.reference.def.restructuredtext
+      - punctuation.definition.directive.restructuredtext
+      - string.other.link.description
+      - string.other.link.title
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: Blockquotes (prose)
+    scope:
+      - entity.name.directive.restructuredtext
+      - markup.quote
+    settings:
+      foreground: *SYN_STRING
+      fontStyle: italic
+
+  - name: Horizontal rule (prose)
+    scope:
+      - meta.separator.markdown
+    settings:
+      foreground: *SYN_COMMENT
+
+  - name: Code blocks
+    scope:
+      - fenced_code.block.language
+      - markup.raw.inner.restructuredtext
+      - markup.fenced_code.block.markdown punctuation.definition.markdown
+    settings:
+      foreground: *SYN_CODE_INLINE
+
+  - name: Prose constants
+    scope:
+      - punctuation.definition.constant.restructuredtext
+    settings:
+      foreground: *SYN_CONSTANT
+
+# ==============================================================================
+# Comments
+# ==============================================================================
+
+  - name: Comments
+    scope:
+      - comment
+      - punctuation.definition.comment
+      - unused.comment
+      - wildcard.comment
+    settings:
+      foreground: *SYN_COMMENT
+      fontStyle: italic
+
+  - name: JSDoc-style keywords
+    scope:
+      - comment keyword.codetag.notation
+      - comment.block.documentation keyword
+      - comment.block.documentation storage.type.class
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: JSDoc-style types
+    scope:
+      - comment.block.documentation entity.name.type
+    settings:
+      foreground: *SYN_CLASS
+      fontStyle: italic
+
+  - name: JSDoc-style type brackets
+    scope:
+      - comment.block.documentation entity.name.type punctuation.definition.bracket
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: JSDoc-style comment parameters
+    scope:
+      - comment.block.documentation variable
+    settings:
+      foreground: *SYN_STRING
+      fontStyle: italic
+
+# ==============================================================================
+# Constants
+# ==============================================================================
+
+  - name: Constants
+    scope:
+      - constant
+      - constant.language
+      - variable.other.constant
+    settings:
+      foreground: *SYN_CONSTANT
+
+  - name: Numeric constants
+    scope:
+      - constant.numeric
+    settings:
+      foreground: *SYN_NUMBER
+
+  - name: Character escape sequences
+    scope:
+      - constant.character.escape
+    settings:
+      foreground: *SYN_NUMBER
+
+# ==============================================================================
+# Classes
+# ==============================================================================
+
+  - name: User-defined class names
+    scope:
+      - entity.name.type.class
+      - entity.name.class
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: User-defined class names support
+    scope:
+      - support.class
+    settings:
+      foreground: *SYN_CLASS
+      fontStyle: italic
+
+  - name: this, super, self, etc.
+    scope:
+      - keyword.expressions-and-types.swift
+      - keyword.other.this
+      - variable.language
+      - variable.language punctuation.definition.variable.php
+      - variable.other.readwrite.instance.ruby
+      - variable.parameter.function.language.special
+    settings:
+      foreground: *SYN_VARIABLE
+      fontStyle: italic
+
+  - name: Inherited classes
+    scope:
+      - entity.other.inherited-class
+    settings:
+      foreground: *SYN_CLASS
+      fontStyle: italic
+
+# ==============================================================================
+# Functions/Methods
+# ==============================================================================
+
+  - name: Function names
+    scope:
+      - entity.name.function
+      - meta.function-call.object
+      - meta.function-call.php
+      - meta.function-call.static
+      - meta.method-call.java meta.method
+      - meta.method.groovy
+      - support.function.any-method.lua
+      - keyword.operator.function.infix
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: Support functions
+    scope:
+      - support.function
+    settings:
+      foreground: *SYN_FUNCTION
+      fontStyle: italic
+
+  - name: Function parameters
+    scope:
+      - entity.name.variable.parameter
+      - meta.at-rule.function variable
+      - meta.at-rule.mixin variable
+      - meta.function.arguments variable.other.php
+      - meta.selectionset.graphql meta.arguments.graphql variable.arguments.graphql
+      - variable.parameter
+    settings:
+      foreground: *SYN_VARIABLE
+      fontStyle: italic
+
+  - name: Decorators
+    scope:
+      - meta.decorator variable.other.readwrite
+      - meta.decorator variable.other.property
+      - meta.decorator variable.other.object
+    settings:
+      foreground: *SYN_DECORATOR
+      fontStyle: italic
+
+  - name: Decorator punctuation
+    scope:
+      - meta.decorator punctuation.decorator
+      - punctuation.decorator
+    settings:
+      foreground: *SYN_DECORATOR
+
+# ==============================================================================
+# Keywords
+# ==============================================================================
+
+  - name: Keywords
+    scope:
+      - keyword
+      - punctuation.definition.keyword
+    settings:
+      foreground: *SYN_KEYWORD
+
+  - name: Control flow keywords
+    scope:
+      - keyword.control
+    settings:
+      foreground: *SYN_KEYWORD_FLOW
+
+  - name: Keyword "new"
+    scope:
+      - keyword.control.new
+      - keyword.operator.new
+    settings:
+      foreground: *SYN_KEYWORD
+      fontStyle: bold
+
+# ==============================================================================
+# Language Built-ins
+# ==============================================================================
+
+  - name: Language Built-ins
+    scope:
+      - support
+    settings:
+      foreground: *SYN_CLASS
+      fontStyle: italic
+
+  - name: Built-in magic functions and constants
+    scope:
+      - support.function.magic
+      - support.variable
+      - variable.other.predefined
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: Built-in functions / properties
+    scope:
+      - support.function.builtin
+      - support.type.property-name.json
+    settings:
+      foreground: *SYN_FUNCTION
+      fontStyle: italic
+
+# ==============================================================================
+# Variables
+# ==============================================================================
+
+  - name: Variables
+    scope:
+      - variable
+      - variable.other.readwrite
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: Object properties
+    scope:
+      - variable.other.property
+      - variable.other.object.property
+    settings:
+      foreground: *SYN_PROPERTY
+
+  - name: Properties (support)
+    scope:
+      - support.type.property-name
+    settings:
+      foreground: *SYN_PROPERTY
+
+# ==============================================================================
+# Storage
+# ==============================================================================
+
+  - name: Storage type
+    scope:
+      - storage.type
+    settings:
+      foreground: *SYN_KEYWORD
+
+  - name: Storage modifier
+    scope:
+      - storage.modifier
+    settings:
+      foreground: *SYN_KEYWORD
+
+# ==============================================================================
+# Operators
+# ==============================================================================
+
+  - name: Operators
+    scope:
+      - keyword.operator
+    settings:
+      foreground: *SYN_OPERATOR
+
+# ==============================================================================
+# Strings
+# ==============================================================================
+
+  - name: Strings
+    scope:
+      - string
+      - string.quoted
+      - punctuation.definition.string
+    settings:
+      foreground: *SYN_STRING
+
+  - name: Template strings
+    scope:
+      - string.template
+      - punctuation.definition.string.template
+    settings:
+      foreground: *SYN_STRING
+
+# ==============================================================================
+# Punctuation
+# ==============================================================================
+
+  - name: Brackets
+    scope:
+      - meta.brace
+      - punctuation.section.brackets
+      - punctuation.section.parens
+    settings:
+      foreground: *SYN_BRACKET
+
+  - name: Separators (commas, semicolons)
+    scope:
+      - punctuation.separator
+      - punctuation.terminator
+    settings:
+      foreground: *DARK_FG_PRIMARY
+
+# ==============================================================================
+# Entities (HTML, CSS, etc.)
+# ==============================================================================
+
+  - name: HTML tags
+    scope:
+      - entity.name.tag
+    settings:
+      foreground: *SYN_TAG
+
+  - name: CSS attribute parent selectors ('&')
+    scope:
+      - entity.other.attribute-name.parent-selector
+    settings:
+      foreground: *SYN_TAG
+
+  - name: HTML/CSS attribute names
+    scope:
+      - entity.other.attribute-name
+    settings:
+      foreground: *SYN_ATTRIBUTE
+
+  - name: HTML/CSS ids
+    scope:
+      - entity.other.attribute-name.id
+    settings:
+      foreground: *SYN_CLASS
+      fontStyle: italic
+
+  - name: CSS class selectors
+    scope:
+      - entity.other.attribute-name.class
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: CSS pseudo-class
+    scope:
+      - entity.other.attribute-name.pseudo-class
+      - entity.other.attribute-name.pseudo-element
+    settings:
+      foreground: *SYN_DECORATOR
+
+  - name: Generic selectors (CSS/SCSS/Less/Stylus)
+    scope:
+      - meta.selector
+    settings:
+      foreground: *SYN_TAG
+
+# ==============================================================================
+# RegExp
+# ==============================================================================
+
+  - name: Regular expressions
+    scope:
+      - string.regexp
+    settings:
+      foreground: *SYN_REGEXP
+
+  - name: RegExp operators
+    scope:
+      - keyword.operator.quantifier.regexp
+      - keyword.operator.or.regexp
+    settings:
+      foreground: *SYN_REGEXP
+
+# ==============================================================================
+# Serializable / Config Languages (JSON, YAML, TOML, etc.)
+# ==============================================================================
+
+  - name: JSON keys
+    scope:
+      - support.type.property-name.json
+      - meta.structure.dictionary.key.json string.quoted
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: YAML keys
+    scope:
+      - entity.name.tag.yaml
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: TOML keys
+    scope:
+      - entity.name.tag.toml
+      - support.type.property-name.toml
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: INI keys
+    scope:
+      - keyword.other.definition.ini
+    settings:
+      foreground: *SYN_FUNCTION
+
+# ==============================================================================
+# Language Extensions / Edge Cases
+# ==============================================================================
+
+  # JavaScript / TypeScript
+  # =======================
+
+  - name: JS/TS object literal keys (frequent)
+    scope:
+      - meta.object-literal.key.js
+      - meta.object-literal.key.ts
+      - meta.object-literal.key.jsx
+      - meta.object-literal.key.tsx
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: JS/TS object properties (frequent)
+    scope:
+      - variable.other.property.js
+      - variable.other.property.ts
+      - variable.other.property.jsx
+      - variable.other.property.tsx
+      - variable.other.object.property.js
+      - variable.other.object.property.ts
+    settings:
+      foreground: *SYN_PROPERTY
+
+  - name: JS/TS destructuring variables
+    scope:
+      - meta.object-binding-pattern-variable.js
+      - meta.object-binding-pattern-variable.ts
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: JS/TS type annotations
+    scope:
+      - meta.type.annotation entity.name.type
+      - meta.type.parameters entity.name.type
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: JS/TS template expression braces
+    scope:
+      - punctuation.definition.template-expression.begin
+      - punctuation.definition.template-expression.end
+    settings:
+      foreground: *SYN_OPERATOR
+
+  - name: JSX component names
+    scope:
+      - support.class.component.js
+      - support.class.component.tsx
+      - entity.name.tag.js
+      - entity.name.tag.tsx
+    settings:
+      foreground: *SYN_TAG
+
+  - name: JSX embedded expressions
+    scope:
+      - punctuation.section.embedded.begin.jsx
+      - punctuation.section.embedded.end.jsx
+      - punctuation.section.embedded.begin.tsx
+      - punctuation.section.embedded.end.tsx
+    settings:
+      foreground: *DARK_FG_PRIMARY
+
+  # Python
+  # ======
+
+  - name: Python function decorators
+    scope:
+      - meta.function.decorator.python
+      - entity.name.function.decorator.python
+    settings:
+      foreground: *SYN_DECORATOR
+
+  - name: Python special methods (dunder)
+    scope:
+      - support.function.magic.python
+    settings:
+      foreground: *SYN_DECORATOR
+      fontStyle: italic
+
+  - name: Python type hints
+    scope:
+      - meta.function.parameters.python support.type
+      - meta.function.return-type.python support.type
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: Python self parameter
+    scope:
+      - variable.parameter.function.language.special.self.python
+    settings:
+      foreground: *SYN_VARIABLE
+      fontStyle: italic
+
+  # CSS / SCSS / Less
+  # ==================
+
+  - name: CSS property names
+    scope:
+      - support.type.property-name.css
+      - support.type.property-name.scss
+      - support.type.property-name.less
+    settings:
+      foreground: *SYN_PROPERTY
+
+  - name: CSS units
+    scope:
+      - keyword.other.unit.css
+      - keyword.other.unit.scss
+      - keyword.other.unit.less
+    settings:
+      foreground: *SYN_NUMBER
+
+  - name: CSS functions
+    scope:
+      - support.function.misc.css
+      - support.function.misc.scss
+    settings:
+      foreground: *SYN_FUNCTION
+
+  - name: SCSS variables
+    scope:
+      - variable.scss
+      - variable.sass
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: SCSS attribute selector strings
+    scope:
+      - meta.attribute-selector.scss
+    settings:
+      foreground: *SYN_STRING
+
+  - name: SCSS attribute selector brackets
+    scope:
+      - punctuation.definition.attribute-selector.end.bracket.square.scss
+      - punctuation.definition.attribute-selector.begin.bracket.square.scss
+    settings:
+      foreground: *DARK_FG_PRIMARY
+
+  # GraphQL
+  # =======
+
+  - name: GraphQL keys
+    scope:
+      - meta.selectionset.graphql variable
+    settings:
+      foreground: *SYN_PROPERTY
+
+  - name: GraphQL function arguments
+    scope:
+      - meta.selectionset.graphql meta.arguments variable
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: GraphQL fragment name
+    scope:
+      - entity.name.fragment.graphql
+      - variable.fragment.graphql
+    settings:
+      foreground: *SYN_CLASS
+
+  # Ruby
+  # ====
+
+  - name: Ruby backticks literal
+    scope:
+      - string.interpolated.ruby
+    settings:
+      foreground: *SYN_STRING
+
+  - name: Ruby Hash symbol keys
+    scope:
+      - constant.other.symbol.hashkey
+      - constant.other.symbol.hashkey.ruby
+      - constant.other.symbol.hashkey.parameter.function.ruby
+      - constant.language.symbol.hashkey.ruby
+    settings:
+      foreground: *SYN_PROPERTY
+
+  # Shell / Bash
+  # ============
+
+  - name: Shell variables prefixed with "$"
+    scope:
+      - source.shell variable.other
+    settings:
+      foreground: *SYN_VARIABLE
+
+  - name: Shell command names
+    scope:
+      - meta.function-call.shell
+    settings:
+      foreground: *SYN_FUNCTION
+
+  # Go
+  # ==
+
+  - name: Go package names
+    scope:
+      - entity.name.package.go
+    settings:
+      foreground: *SYN_CLASS
+
+  - name: Go function calls
+    scope:
+      - meta.function-call.go
+    settings:
+      foreground: *SYN_FUNCTION
+
+  # Rust
+  # ====
+
+  - name: Rust attributes
+    scope:
+      - meta.attribute.rust
+    settings:
+      foreground: *SYN_DECORATOR
+
+  - name: Rust lifetimes
+    scope:
+      - storage.modifier.lifetime.rust
+      - entity.name.lifetime.rust
+    settings:
+      foreground: *SYN_DECORATOR
+
+  - name: Rust macros
+    scope:
+      - entity.name.function.macro.rust
+    settings:
+      foreground: *SYN_DECORATOR
+
+  # PHP
+  # ===
+
+  - name: PHP variables
+    scope:
+      - variable.other.php punctuation.definition.variable.php
+    settings:
+      foreground: *SYN_VARIABLE
+
+  # SQL
+  # ===
+
+  - name: SQL keywords
+    scope:
+      - keyword.other.sql
+    settings:
+      foreground: *SYN_KEYWORD
+
+  # Makefile
+  # ========
+
+  - name: Makefile prerequisite names
+    scope:
+      - meta.scope.prerequisites.makefile
+    settings:
+      foreground: *SYN_STRING
+
+  # Haskell
+  # =======
+
+  - name: Haskell pragmas
+    scope:
+      - meta.preprocessor.haskell
+    settings:
+      foreground: *SYN_COMMENT
+
+  # Log files
+  # =========
+
+  - name: Log file error
+    scope:
+      - log.error
+    settings:
+      foreground: *SEMANTIC_GIT_DELETED
+      fontStyle: bold
+
+  - name: Log file warning
+    scope:
+      - log.warning
+    settings:
+      foreground: *SEMANTIC_GIT_MODIFIED
+      fontStyle: bold
+
+  # Edge Cases (foreground resets)
+  # ===============================
+
+  - name: Edge cases (foreground color resets)
+    scope:
+      - keyword.operator.dereference.java
+      - keyword.operator.navigation.groovy
+      - meta.scope.for-loop.shell punctuation.definition.string.begin
+      - meta.scope.for-loop.shell punctuation.definition.string.end
+      - meta.scope.for-loop.shell string
+      - storage.modifier.import
+      - punctuation.separator.list.comma.css
+      - constant.language.empty-list.haskell
+    settings:
+      foreground: *DARK_FG_PRIMARY
+
+  - name: Powershell constants
+    scope:
+      - support.constant
+    settings:
+      foreground: *SYN_CONSTANT

@@ -1,5 +1,6 @@
 tmp/
 node_modules/
+src/generated/
 *.vsix
 
 .DS_Store

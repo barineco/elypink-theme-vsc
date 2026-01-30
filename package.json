@@ -2,7 +2,7 @@
   "name": "elypink-theme",
   "displayName": "Elypink Theme",
   "description": "lovely theme for VSC",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "barineco",
   "engines": {
     "vscode": "^1.70.0"
@@ -19,6 +19,11 @@
     "themes": [
       {
         "label": "Elypink Light",
+        "uiTheme": "vs",
+        "path": "./themes/elypink-light-master.json"
+      },
+      {
+        "label": "Elypink Light (Subtle)",
         "uiTheme": "vs",
         "path": "./themes/elypink-light.json"
       },
@@ -45,6 +50,11 @@
       {
         "label": "Elypink Dark",
         "uiTheme": "vs-dark",
+        "path": "./themes/elypink-dark-master.json"
+      },
+      {
+        "label": "Elypink Dark (Subtle)",
+        "uiTheme": "vs-dark",
         "path": "./themes/elypink-dark.json"
       },
       {
@@ -66,7 +76,10 @@
   "license": "MIT",
   "scripts": {
     "generate": "node scripts/generate-all.js",
-    "check-contrast": "node utils/check-contrast.js",
-    "analyze": "node utils/analyze-colors.js"
+    "analyze": "node utils/analyze-colors.js",
+    "report": "mkdir -p tmp/color-report && node utils/list-color-metrics.js light > tmp/color-report/light.txt && node utils/list-color-metrics.js dark > tmp/color-report/dark.txt"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.1"
   }
 }
